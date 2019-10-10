@@ -1,5 +1,4 @@
 from selenium import webdriver
-from depot.manager import DepotManager
 from argparse import ArgumentParser
 import os
 import sys
