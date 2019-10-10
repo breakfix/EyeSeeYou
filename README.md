@@ -8,7 +8,7 @@ Designed to be used in conjuction with a running masscan.
 
 Run masscan to enumerate a subnet for common web ports (send output to output.txt file):
     
-    masscan 10.0.0.0/8 -p80,443,8080
+    masscan 10.0.0.0/8 -p80,443,8080 > output.txt
 
 At the same time run EyeSeeYou.py to grab screenshots.
 
