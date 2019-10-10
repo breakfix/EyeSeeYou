@@ -1,7 +1,5 @@
 # EyeSeeYou #
 
-Simple web server enumeration tool.
-
 Same concept as [Eyewitness](https://github.com/FortyNorthSecurity/EyeWitness) but with less features and minimal dependencies.
 
 Designed to be used in conjuction with a running masscan.
