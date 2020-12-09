@@ -14,8 +14,8 @@ At the same time run EyeSeeYou.py to grab screenshots.
 
 The below will output screenshot images to the "test_dir" directory for each discovered port:
 
-    EyeSeeYou.py --out-dir test_dir --input-file output.txt
+    EyeSeeYou.py -o test_dir -i output.txt
 
 Optional arguments are --timeout (default 3 seconds) and --headless (run without opening Chrome) 
 
-    EyeSeeYou.py --out-dir test_dir --input-file output.txt --timeout 5 --headless
+    EyeSeeYou.py -o test_dir -i output.txt --timeout 5 --headless
