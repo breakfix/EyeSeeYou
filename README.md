@@ -4,6 +4,10 @@ Same concept as [Eyewitness](https://github.com/FortyNorthSecurity/EyeWitness) b
 
 Designed to be used in conjuction with a running masscan.
 
+## Installation ##
+
+    pip install -r requirements.txt
+
 ## Usage ##
 
 Run masscan to enumerate a subnet for common web ports (send output to output.txt file):
