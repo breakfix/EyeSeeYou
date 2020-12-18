@@ -6,6 +6,8 @@ Designed to be used in conjuction with a running masscan.
 
 ## Installation ##
 
+Install with
+
     pip install -r requirements.txt
 
 ## Usage ##
