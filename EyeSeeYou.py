@@ -29,8 +29,8 @@ parser.add_argument("--no-masscan", dest="format",
                     help='Read targets from input file instead of running masscan (requires you specify ports to use as argument e.g. --no-masscan 80,443,8080)')
 parser.add_argument("--timeout", dest="timeout", default=3,
                     help='Set timeout in seconds (default is 3 seconds)')
-parser.add_argument("--proxy", dest="proxy", default='127.0.0.1:1080', const='127.0.0.1:1080', nargs='?',
-                    help='Use socks4 proxy (default is 127.0.0.1:1080) optionally provide a socks host and port e.g. --proxy 192.168.1.1:8080')
+parser.add_argument("--proxy", dest="proxy",
+                    help='Optionally use a socks4 proxy (specify host and port e.g. --proxy 192.168.1.1:8080')
 
 # Print help if no arguments given
 if len(sys.argv)==1:
