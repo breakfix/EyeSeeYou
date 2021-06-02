@@ -2,4 +2,4 @@ filedepot==0.6.0
 pkg-resources==0.0.0
 selenium==3.141.0
 Unidecode==1.0.23
-urllib3==1.25.2
+urllib3==1.26.5
