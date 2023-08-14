@@ -11,7 +11,7 @@ print("""\
  / /___/ /_/ /  __/__/ /  __/  __/ / /_/ / /_/ / 
 /_____/\__, /\___/____/\___/\___/_/\____/\__,_/  
       /____/                                  
-              v0.2 Matt Johnson @breakfix  
+              v0.4 Matt Johnson @breakfix  
  """)
 
 def path(value):
@@ -25,7 +25,7 @@ parser.add_argument("-i", dest="input_file", required=True, type=path,
                     help='File being outputted by Masscan to use as input file')
 parser.add_argument("--headless", dest="headless", action='store_true',
                     help='Run Chrome in headless mode')
-parser.add_argument("--no-masscan", dest="format",
+parser.add_argument("--no-masscan", dest="format", action='store_true',
                     help='Read targets from input file instead of running masscan (requires you specify ports to use as argument e.g. --no-masscan 80,443,8080)')
 parser.add_argument("--timeout", dest="timeout", default=3,
                     help='Set timeout in seconds (default is 3 seconds)')
@@ -40,12 +40,13 @@ args = parser.parse_args()
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument('--ignore-certificate-errors')
+#chrome_options.add_argument('--host-resolver-rules="MAP * ~NOTFOUND , EXCLUDE myproxy"')
 
 if args.headless:
     chrome_options.headless = True
 
 if args.proxy:
-    chrome_options.add_argument("--proxy-server=socks4://" + args.proxy)
+    chrome_options.add_argument("--proxy-server=" + args.proxy)
 
 driver = webdriver.Chrome(executable_path=os.path.abspath("chromedriver"), chrome_options=chrome_options) 
 driver.set_window_size(1024, 768) # set the window size that you need 
@@ -55,30 +56,28 @@ targets = []
 
 if args.format:
     with open(args.input_file, "r") as infile:
-        ports = args.format.split(',')
         for line in infile:
-            for port in ports:
-                target = line.rstrip('\r\n') + ":" + port
-                ip = line.rstrip('\r\n')
-                if target not in targets:
-                    print("Fetching " + "http://" + ip + ":" + port)
-                    try:
-                        driver.get('http://' + ip + ":" + port)
-                        time.sleep(1) # wait for page to fully load
-                        driver.save_screenshot(os.path.join(args.out_dir, str(ip) + ':' + str(port) + '_http.png'))
-                        targets.append(ip + ":" + port)
-                    except:
-                        print("[!] Something went wrong")
-                        targets.append(ip + ":" + port)                
-                    print("Fetching " + "https://" + ip + ":" + port)
-                    try:
-                        driver.get('https://' + ip + ":" + port)
-                        time.sleep(1)
-                        driver.save_screenshot(os.path.join(args.out_dir, str(ip) + ':' + str(port) + '_https.png'))
-                        targets.append(ip + ":" + port)
-                    except:
-                        print("[!] Something went wrong")
-                        targets.append(ip + ":" + port)
+            target = line.rstrip('\r\n')
+            ip = line.rstrip('\r\n')
+            if target not in targets:
+                print("Fetching " + "http://" + ip)
+                try:
+                    driver.get('http://' + ip)
+                    time.sleep(3) # wait for page to fully load
+                    driver.save_screenshot(os.path.join(args.out_dir, str(ip) + '_http.png'))
+                    targets.append(ip)
+                except:
+                    print("[!] Something went wrong")
+                    targets.append(ip)                
+                print("Fetching " + "https://" + ip)
+                try:
+                    driver.get('https://' + ip)
+                    time.sleep(3)
+                    driver.save_screenshot(os.path.join(args.out_dir, str(ip) + '_https.png'))
+                    targets.append(ip)
+                except:
+                    print("[!] Something went wrong")
+                    targets.append(ip)
 else:
     while True:
         with open(args.input_file, "r") as infile:
